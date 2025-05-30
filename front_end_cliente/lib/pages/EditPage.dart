@@ -22,6 +22,7 @@ class _EditpageState extends State<Editpage> {
   TextEditingController cepController = TextEditingController();
   TextEditingController localidadeController = TextEditingController();
   TextEditingController estadoController = TextEditingController();
+  TextEditingController ufController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -34,6 +35,7 @@ class _EditpageState extends State<Editpage> {
     cepController.text = widget.cliente['cep'];
     localidadeController.text = widget.cliente['localidade'];
     estadoController.text = widget.cliente['estado'];
+    ufController = widget.cliente['uf'];
   }
 
   @override
@@ -167,6 +169,21 @@ class _EditpageState extends State<Editpage> {
                   enabled: false,
                 ),
                 SizedBox(height: 20),
+                TextFormField(
+                  controller: ufController,
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.flag),
+                    labelText: "Uf",
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Por favor, insira um CEP válido.";
+                    }
+                    return null;
+                  },
+                  enabled: false,
+                ),
+                SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
@@ -176,6 +193,7 @@ class _EditpageState extends State<Editpage> {
                       String cep = cepController.text;
                       String localidade = localidadeController.text;
                       String estado = estadoController.text;
+                      String uf = ufController.text;
 
                       editarCliente(
                         nome,
@@ -184,6 +202,7 @@ class _EditpageState extends State<Editpage> {
                         cep,
                         localidade,
                         estado,
+                        uf,
                       );
                     }
                   },
@@ -214,13 +233,15 @@ class _EditpageState extends State<Editpage> {
         if (endereco.isNotEmpty && !endereco.containsKey('erro')) {
           setState(() {
             localidadeController.text = endereco['localidade'];
-            estadoController.text = endereco['uf'];
+            ufController.text = endereco['uf'];
+            estadoController.text = endereco['estado'];
           });
         } else {
           print("Erro: CEP invalido ou nao encontrado.");
           setState(() {
             localidadeController.text = "";
             estadoController.text = "";
+            ufController.text = "";
           });
         }
       }
@@ -229,6 +250,7 @@ class _EditpageState extends State<Editpage> {
       setState(() {
         localidadeController.text = "";
         estadoController.text = "";
+        ufController.text = "";
       });
     }
   }
@@ -240,6 +262,7 @@ class _EditpageState extends State<Editpage> {
     String cep,
     String localidade,
     String estado,
+    String uf,
   ) async {
     final data = {
       "id": widget.cliente['id'],
@@ -249,6 +272,7 @@ class _EditpageState extends State<Editpage> {
       "cep": cep,
       "localidade": localidade,
       "estado": estado,
+      "uf": uf,
     };
 
     Map<String, String> headers = {

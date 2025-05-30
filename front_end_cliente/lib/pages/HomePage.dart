@@ -113,6 +113,7 @@ class _HomepageState extends State<Homepage> {
                                 Text('CEP: ${cliente['cep']}'),
                                 Text('Localidade: ${cliente['localidade']}'),
                                 Text('Estado: ${cliente['estado']}'),
+                                Text('Uf: ${cliente['uf']}'),
                               ],
                             ),
                             trailing: Row(

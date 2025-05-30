@@ -20,6 +20,7 @@ class _CadastropageState extends State<Cadastropage> {
   TextEditingController cepController = TextEditingController();
   TextEditingController localidadeController = TextEditingController();
   TextEditingController estadoController = TextEditingController();
+  TextEditingController ufController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   @override
@@ -154,6 +155,21 @@ class _CadastropageState extends State<Cadastropage> {
                   enabled: false,
                 ),
                 SizedBox(height: 20),
+                TextFormField(
+                  controller: ufController,
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.flag),
+                    labelText: "Uf",
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Por favor, insira um CEP válido.";
+                    }
+                    return null;
+                  },
+                  enabled: false,
+                ),
+                SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
@@ -163,6 +179,7 @@ class _CadastropageState extends State<Cadastropage> {
                       String cep = cepController.text;
                       String localidade = localidadeController.text;
                       String estado = estadoController.text;
+                      String uf = ufController.text;
 
                       cadastrarCliente(
                         nome,
@@ -171,6 +188,7 @@ class _CadastropageState extends State<Cadastropage> {
                         cep,
                         localidade,
                         estado,
+                        uf,
                       );
                     }
                   },
@@ -201,13 +219,15 @@ class _CadastropageState extends State<Cadastropage> {
         if (endereco.isNotEmpty && !endereco.containsKey('erro')) {
           setState(() {
             localidadeController.text = endereco['localidade'];
-            estadoController.text = endereco['uf'];
+            estadoController.text = endereco['estado'];
+            ufController.text = endereco['uf'];
           });
         } else {
           print("Erro: CEP invalido ou nao encontrado.");
           setState(() {
             localidadeController.text = "";
             estadoController.text = "";
+            ufController.text = "";
           });
         }
       }
@@ -216,6 +236,7 @@ class _CadastropageState extends State<Cadastropage> {
       setState(() {
         localidadeController.text = "";
         estadoController.text = "";
+        ufController.text = "";
       });
     }
   }
@@ -228,6 +249,7 @@ class _CadastropageState extends State<Cadastropage> {
     String cep,
     String localidade,
     String estado,
+    String uf,
   ) async {
     final data = {
       "nome": nome,
@@ -236,6 +258,7 @@ class _CadastropageState extends State<Cadastropage> {
       "cep": cep,
       "localidade": localidade,
       "estado": estado,
+      "uf": uf,
     };
 
     Map<String, String> headers = {
@@ -257,6 +280,7 @@ class _CadastropageState extends State<Cadastropage> {
         cepController.clear();
         localidadeController.clear();
         estadoController.clear();
+        ufController.clear();
 
         return showDialog<void>(
           context: context,
