@@ -120,6 +120,11 @@ class _EditpageState extends State<Editpage> {
                   onChanged: (cep) {
                     if (cep.length == 8) {
                       buscarEndereco(cep);
+                    } else {
+                      setState(() {
+                        localidadeController.text = "";
+                        estadoController.text = "";
+                      });
                     }
                   },
                 ),
@@ -203,9 +208,17 @@ class _EditpageState extends State<Editpage> {
         });
       } else {
         print("Erro: CEP invalido ou nao encontrado.");
+        setState(() {
+          localidadeController.text = "";
+          estadoController.text = "";
+        });
       }
     } else {
       print("Erro ao buscar o CEP.");
+      setState(() {
+        localidadeController.text = "";
+        estadoController.text = "";
+      });
     }
   }
 
