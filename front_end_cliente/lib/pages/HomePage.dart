@@ -25,6 +25,7 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
+    // Filtro para pesquisar o nome do cliente
     filtroClientes =
         textoProcura.isEmpty
             ? clientes
@@ -44,12 +45,16 @@ class _HomepageState extends State<Homepage> {
         actions: [
           IconButton(
             onPressed: () {
-              isDarkModeNotifier.value = !isDarkModeNotifier.value;
+              isDarkModeNotifier.value =
+                  !isDarkModeNotifier.value; // altera qual o modo que esta
             },
             icon: ValueListenableBuilder(
-              valueListenable: isDarkModeNotifier,
+              valueListenable:
+                  isDarkModeNotifier, // verficia qual o modo que esta
               builder: (context, isDarkMode, child) {
-                return Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode);
+                return Icon(
+                  isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                ); //criando um botao para alterar entra dark e light mode
               },
             ),
           ),
@@ -60,7 +65,7 @@ class _HomepageState extends State<Homepage> {
         padding: const EdgeInsets.all(16.0),
         child:
             clientes
-                    .isEmpty //Se nao houver clientes, exibe a mensagem
+                    .isEmpty // Se nao houver clientes, exibe a mensagem
                 ? Center(
                   child: Text(
                     "Nenhum cliente cadastrado",
@@ -144,7 +149,7 @@ class _HomepageState extends State<Homepage> {
     );
   }
 
-  //Função para carregar a lista de clientes
+  // Função para carregar a lista de clientes
   Future<void> carregarClientes() async {
     try {
       final response = await http.get(
@@ -165,7 +170,7 @@ class _HomepageState extends State<Homepage> {
     }
   }
 
-  //Função para deletar cliente
+  // Função para deletar cliente
   Future<void> deletarCliente(String clienteId) async {
     bool? confirmacao = await showDialog(
       context: context,
@@ -191,7 +196,7 @@ class _HomepageState extends State<Homepage> {
     );
 
     if (confirmacao == true) {
-      //Se o usuario confirmar a exclusao, executa o codigo abaixo
+      // Se o usuario confirmar a exclusao, executa o codigo abaixo
       try {
         final responseDelete = await http.delete(
           Uri.parse("http://localhost:8090/projeto/api/v1/clientes/$clienteId"),

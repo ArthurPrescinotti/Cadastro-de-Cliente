@@ -30,12 +30,16 @@ class _CadastropageState extends State<Cadastropage> {
         actions: [
           IconButton(
             onPressed: () {
-              isDarkModeNotifier.value = !isDarkModeNotifier.value;
+              isDarkModeNotifier.value =
+                  !isDarkModeNotifier.value; // altera qual o modo que esta
             },
             icon: ValueListenableBuilder(
-              valueListenable: isDarkModeNotifier,
+              valueListenable:
+                  isDarkModeNotifier, // verficia qual o modo que esta
               builder: (context, isDarkMode, child) {
-                return Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode);
+                return Icon(
+                  isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                ); //criando um botao para alterar entra dark e light mode
               },
             ),
           ),
@@ -177,31 +181,34 @@ class _CadastropageState extends State<Cadastropage> {
     );
   }
 
+  // Funcao para pesquisar o CEP em uma API externa
   Future<void> buscarEndereco(String cep) async {
-    Map<String, dynamic> endereco = {};
-    final response = await http.get(
-      Uri.parse("https://viacep.com.br/ws/$cep/json/"),
-    );
+    try {
+      Map<String, dynamic> endereco = {};
+      final response = await http.get(
+        Uri.parse("https://viacep.com.br/ws/$cep/json/"),
+      );
 
-    if (response.statusCode == 200) {
-      setState(() {
-        String data = utf8.decode(response.bodyBytes);
-        endereco = json.decode(data);
-      });
+      if (response.statusCode == 200) {
+        setState(() {
+          String data = utf8.decode(response.bodyBytes);
+          endereco = json.decode(data);
+        });
 
-      if (endereco.isNotEmpty && !endereco.containsKey('erro')) {
-        setState(() {
-          localidadeController.text = endereco['localidade'];
-          estadoController.text = endereco['uf'];
-        });
-      } else {
-        print("Erro: CEP invalido ou nao encontrado.");
-        setState(() {
-          localidadeController.text = "";
-          estadoController.text = "";
-        });
+        if (endereco.isNotEmpty && !endereco.containsKey('erro')) {
+          setState(() {
+            localidadeController.text = endereco['localidade'];
+            estadoController.text = endereco['uf'];
+          });
+        } else {
+          print("Erro: CEP invalido ou nao encontrado.");
+          setState(() {
+            localidadeController.text = "";
+            estadoController.text = "";
+          });
+        }
       }
-    } else {
+    } catch (e) {
       print("Erro ao buscar o CEP.");
       setState(() {
         localidadeController.text = "";

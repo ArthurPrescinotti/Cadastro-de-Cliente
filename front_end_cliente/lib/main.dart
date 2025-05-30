@@ -24,10 +24,14 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(
               seedColor: Colors.blue,
-              brightness: isDarkMode ? Brightness.dark : Brightness.light,
+              brightness:
+                  isDarkMode
+                      ? Brightness.dark
+                      : Brightness
+                          .light, //criando um botao para alterar entra dark e light mode
             ),
           ),
-          home: Homepage(),
+          home: Homepage(), //Chamando o Homepage como pagina home
         );
       },
     );
