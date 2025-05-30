@@ -120,6 +120,7 @@ class _CadastropageState extends State<Cadastropage> {
                       setState(() {
                         localidadeController.text = "";
                         estadoController.text = "";
+                        ufController.text = "";
                       });
                     }
                   },

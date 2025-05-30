@@ -35,7 +35,7 @@ class _EditpageState extends State<Editpage> {
     cepController.text = widget.cliente['cep'];
     localidadeController.text = widget.cliente['localidade'];
     estadoController.text = widget.cliente['estado'];
-    ufController = widget.cliente['uf'];
+    ufController.text = widget.cliente['uf'];
   }
 
   @override
@@ -134,6 +134,7 @@ class _EditpageState extends State<Editpage> {
                       setState(() {
                         localidadeController.text = "";
                         estadoController.text = "";
+                        ufController.text = "";
                       });
                     }
                   },
@@ -233,8 +234,8 @@ class _EditpageState extends State<Editpage> {
         if (endereco.isNotEmpty && !endereco.containsKey('erro')) {
           setState(() {
             localidadeController.text = endereco['localidade'];
-            ufController.text = endereco['uf'];
             estadoController.text = endereco['estado'];
+            ufController.text = endereco['uf'];
           });
         } else {
           print("Erro: CEP invalido ou nao encontrado.");
