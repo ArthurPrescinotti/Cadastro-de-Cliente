@@ -17,6 +17,7 @@ public class Cliente {
     private String cep;
     private String localidade;
     private String estado;
+    private String uf;
 
 
 }
