@@ -76,7 +76,10 @@ class _CadastropageState extends State<Cadastropage> {
                     labelText: "E-Mail",
                   ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value == null ||
+                        value.isEmpty ||
+                        !value.contains('@') ||
+                        !value.contains('.')) {
                       return "Por favor, insira um e-mail válido.";
                     }
                     return null;
