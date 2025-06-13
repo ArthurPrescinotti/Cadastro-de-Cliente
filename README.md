@@ -14,5 +14,5 @@ Sistema de Cadastro de Cliente Usando o Java Spring Boot de Backend e Flutter de
     - flutter run -d chrome --web-port 63960
     
 ## Observação: 
-  - tem que ser na port 63960 se não o flutter não vai encontrar a API.
+  - Obrigatório ser na port 63960 se não o flutter não vai encontrar a API.
 
